@@ -187,29 +187,26 @@ class EventHandler:
             except Exception as e:
                 if not self.tolerate_exceptions:
                     raise e
-                else:
-                    if self.verbose:
-                        print(f'WARNING: {str(callback.__name__)} produces an exception error.',
-                              file=self.stream_output)
-                        print('Arguments', args, file=self.stream_output)
-                        print(e, file=self.stream_output)
-                    all_ok = False
-                    continue
-
+                if self.verbose:
+                    print(f'WARNING: {str(callback.__name__)} produces an exception error.',
+                          file=self.stream_output)
+                    print('Arguments', args, file=self.stream_output)
+                    print(e, file=self.stream_output)
+                all_ok = False
         return all_ok
 
     def __str__(self) -> str:
         """Return a string representation."""
 
-        mem_address = str(hex(id(self)))
+        mem_address = hex(id(self))
 
         event_related = \
-            [f"{event}:[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in
+                [f"{event}:[{', '.join([callback.__name__ for callback in self.__events[event]])}]" for event in
              self.__events]
 
         return f'<class {self.__class__.__name__} at ' \
-            f'{mem_address}: {", ".join(event_related)}, verbose={self.verbose}, ' \
-            f'tolerate_exceptions={self.tolerate_exceptions}>'
+                f'{mem_address}: {", ".join(event_related)}, verbose={self.verbose}, ' \
+                f'tolerate_exceptions={self.tolerate_exceptions}>'
 
     def __repr__(self) -> str:
         """Return python object representation."""

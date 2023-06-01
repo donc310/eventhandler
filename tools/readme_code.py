@@ -42,7 +42,7 @@ class ChatRoom:
 
     def say(self, user, msg=None):
         """Let user (and bots) send a message to the chat room."""
-        if not user in self.__users:
+        if user not in self.__users:
             # if user is not registered fire onNewuser event and recibe it inside the class.
             self.__users[user] = []
             self.event_handler.fire('onNewuser', user)

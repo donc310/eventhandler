@@ -42,7 +42,7 @@ class TestEventHandler(TestCase):
             eh = EventHandler(stream_output=f, verbose=True)
             self.assertEqual('test.txt', eh.stream_output.name)
 
-            instance_id = str(hex(id(eh)))
+            instance_id = hex(id(eh))
             f.close()
         with open('test.txt', 'r') as f:
             content = f.read()
@@ -175,7 +175,7 @@ class TestEventHandler(TestCase):
         eh = EventHandler('one')
 
         def check__str__output():
-            instance_id = str(hex(id(eh)))
+            instance_id = hex(id(eh))
             self.assertTrue(instance_id in eh.__str__())
             self.assertTrue(f'verbose={eh.verbose}' in eh.__str__())
             self.assertTrue(f'tolerate_exceptions={eh.tolerate_exceptions}' in eh.__str__())
